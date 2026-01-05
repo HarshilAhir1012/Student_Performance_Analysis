@@ -1,0 +1,314 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import time
+space = "---" * 25
+
+class DataAnalyzer:
+    def __init__(self, student_data):
+        self.student_data = student_data
+
+    # ## 🟢 SECTION 1: Understanding the Data
+
+        # 1. How many students are present in the dataset?
+        # 2. How many features (columns) does the dataset have?
+        # 3. What are the data types of each column?
+        # 4. Are there any missing values in the dataset?
+        # 5. What is the distribution of students by gender?
+
+
+    def analyze_data(self): ## Section_1
+
+        print(space)
+        Student_count = self.student_data.shape[0]
+        print(f" How many students are present in the dataset? : {Student_count}")
+        print(space)
+
+        time.sleep(1)
+        coulumn_count = self.student_data.shape[1]
+        print(f"How many features (columns) does the dataset have? : {coulumn_count}")
+        print(space)
+
+        time.sleep(1)
+        Info_coloumns = self.student_data.info().split('\n')
+        print(f"What are the data types of each column? : {Info_coloumns}")
+        print(space)
+
+        time.sleep(1)
+        missing_values = sum(self.student_data.isnull().sum())
+        print(f"How many missing values are there? : {missing_values}")
+        print(space)
+
+        time.sleep(1)
+        gender_distribution = self.student_data["sex"].value_counts()
+        print(f"What is the distribution of students by gender?? : {gender_distribution}")
+        print(space)
+        time.sleep(1)
+
+        print(f"Plot the distribution of students by gender : \n")
+        gender_distribution.plot.bar()
+        plt.xlabel('Gender')
+        plt.ylabel('Count')
+        plt.title('Distribution of Students by Gender')
+        plt.show()
+        print(space)
+        time.sleep(1)
+
+        plt.show()
+        
+        return Student_count , coulumn_count , Info_coloumns , missing_values , gender_distribution
+    
+     ## 🟢 SECTION 2: Academic Performance Analysis
+
+        # 6. What is the average final grade (G3) of students?
+        # 7. What is the average G3 score for male vs female students?
+        # 8. Which students scored the highest and lowest final grades?
+        # 9. What is the distribution of final grades (G3)?
+        # 10. How many students scored above 15 in final grade?
+
+    def Academic_performance(self): ## Section_2
+
+        print(space)
+        time.sleep(1)
+
+        avg_final_grade = self.student_data['G3'].mean()
+        print(f"What is the average final grade (G3) of students? : {avg_final_grade}")
+        print(space)
+        time.sleep(1)
+
+        avg_final_grade_male_female = self.student_data.groupby('sex')['G3'].mean()
+        print(f"What is the average G3 score for male vs female students? : {avg_final_grade_male_female}")
+        print(space)
+        time.sleep(1)
+
+        highest_final_grade = self.student_data[self.student_data['G3'] == self.student_data['G3'].max()]
+        lowest_final_grade = self.student_data[self.student_data['G3'] == self.student_data['G3'].min()]
+
+        print(f"Which students scored the highest and lowest final grades? : \n Highest one :{highest_final_grade} ")
+        print(space)
+        print(f" Lowest one :{lowest_final_grade} ")    
+        print(space)
+        time.sleep(1)
+
+        
+        students_above_15 = self.student_data[self.student_data['G3'] > 15].count()['G3']
+        print(f"How many students scored above 15 in final grade? : {students_above_15}")
+        print(space)
+        time.sleep(1)
+
+        print(f"What is the distribution of final grades (G3)? : ")
+        plt.figure(figsize=(8, 6))
+        sns.histplot(self.student_data['G3'], bins=20, kde=True)
+        plt.xlabel('Final Grade (G3)')
+        plt.ylabel('Frequency')
+        plt.title('Distribution of Final Grades (G3)')
+        print(space)
+        time.sleep(1)
+
+        plt.show()
+
+        return avg_final_grade , avg_final_grade_male_female , highest_final_grade , lowest_final_grade , students_above_15
+    
+    # ## 🟢 SECTION 3: Study Habits & Attendance
+
+    # 11. How does weekly study time affect final grades?
+    # 12. Is there a relationship between absences and G3?
+    # 13. Do students with fewer failures perform better?
+    # 14. What is the average grade of students with extra study support?
+    # 15. Does family support influence academic performance?
+
+    def Study_Habits_Attendance(self): ## Section_3
+        
+        print(space)
+        time.sleep(1)
+
+        print("11. How does weekly study time affect final grades?")
+        corr_of_studytime_G3 = self.student_data['studytime'].corr(self.student_data['G3'])
+        corr_reletion(corr_of_studytime_G3,'studytime','G3')
+        print(space)
+        time.sleep(1)
+
+        print("12. Is there a relationship between absences and G3?")
+        corr_of_absences_G3 = self.student_data['absences'].corr(self.student_data['G3'])
+        corr_reletion(corr_of_absences_G3,'absences','G3')
+        print(space)
+        time.sleep(1)
+
+        print("13. Do students with fewer failures perform better?")
+        corr_of_failures_G3 = self.student_data['failures'].corr(self.student_data['G3'])
+        corr_reletion(corr_of_failures_G3,'failures','G3')
+        print(space)
+        time.sleep(1)
+
+        avg_grade_extra_support = self.student_data[self.student_data['schoolsup'] == 'yes']['G3'].mean()
+        print(f"14. What is the average grade of students with extra study support? : {avg_grade_extra_support}")
+        corr_of_extrasup_G3 = self.student_data['schoolsup'].map({'yes': 1, 'no': 0}).corr(self.student_data['G3'])
+        corr_reletion(corr_of_extrasup_G3,'schoolsup','G3')
+        print(space)
+        time.sleep(1)
+       
+
+        print("15. Does family support influence academic performance?")
+        corr_of_famsup_G3 = self.student_data['famsup'].map({'yes': 1, 'no': 0}).corr(self.student_data['G3'])
+        corr_reletion(corr_of_famsup_G3,'famsup','G3')
+        print(space)
+        time.sleep(1)
+
+        print(" 📈 Plots for Study Habits & Attendance Analysis:")
+        print(space)
+        time.sleep(1)
+
+
+        print(f"Plot showing weekly study time vs G3 : ")
+        plt.figure(figsize=(6, 4))
+        sns.boxplot(x='studytime', y='G3', data=self.student_data)
+        plt.xlabel('Weekly Study Time')
+        plt.ylabel('Final Grade (G3)')
+        plt.title('Weekly Study Time vs Final Grade With corr = ' + str(round(corr_of_studytime_G3,5)))
+        plt.grid(True)
+        print(space)
+        time.sleep(1)
+        plt.show()
+
+        print(f"Plot showing family support vs G3 : ")
+        # plt.figure(figsize=(6, 4))
+        sns.violinplot(x='famsup', y='G3', data=self.student_data)
+        plt.xlabel('Family Support')
+        plt.ylabel('Final Grade (G3)')
+        plt.title('Family Support vs Final Grade With corr =' + str(round(corr_of_famsup_G3,5)))
+        plt.grid(True)
+        print(space)
+        time.sleep(1)
+        plt.show()
+
+        print(f"plot showing extra study support vs G3 : ")
+        # plt.figure(figsize=(6, 4))
+        sns.boxplot(x='schoolsup', y='G3', data=self.student_data)
+        plt.xlabel('Extra Study Support')
+        plt.ylabel('Final Grade (G3)')
+        plt.title('Extra Study Support vs Final Grade with corr =' + str(round(corr_of_extrasup_G3,5)))
+        plt.grid(True)
+        print(space)
+        time.sleep(1)
+        plt.show()
+
+        print("End of Section 3 Analysis !!!")
+
+        return corr_of_studytime_G3 , corr_of_absences_G3 , corr_of_failures_G3 , avg_grade_extra_support  , corr_of_extrasup_G3 , corr_of_famsup_G3
+    
+    ## 🟢 SECTION 4: Lifestyle & Social Factors
+
+        # 16. Does free time after school affect grades?
+        # 17. Is alcohol consumption related to student performance?
+        # 18. Do students in romantic relationships perform differently?
+        # 19. Does internet access at home improve grades?
+        # 20. Does going out with friends affect performance?
+
+    def Lifestyle_Social_Factors(self): ## Section_4
+        pass
+
+    ## 🟢 SECTION 5: Visualization-Based Questions
+
+        # 21. Plot the distribution of final grades using a histogram.
+        # 22. Create a boxplot comparing G3 scores by gender.
+        # 23. Plot absences vs final grade and analyze the trend.
+        # 24. Create a heatmap showing correlations between numeric features.
+        # 25. Visualize study time vs performance using bar or box plots.
+
+    def Visualization_Based_Questions(self): ## Section_5
+        pass
+
+    ## 🟢 SECTION 6: Advanced Analysis 
+
+        # 26. Identify top 10% performing students.
+        # 27. Compare performance of students who want higher education vs those who don’t.
+        # 28. Which factor shows the strongest correlation with final grade?
+        # 29. Are students with more past failures at higher risk of low grades?
+        # 30. What are the key indicators of good academic performance?
+    
+    def Advanced_Analysis(self): ## Section_6
+        pass
+
+    ## 🟢 SECTION 7: Insight & Conclusion Question
+        
+        # 31. What are the 5 most important insights from this dataset?
+        # 32. Which factors negatively affect student performance the most?
+        # 33. Which factors positively affect student performance the most?
+        # 34. What recommendations can be given to improve student results?
+        # 35. What limitations does this dataset have?
+        
+    def Insight_Conclusion_Questions(self): ## Section_7
+        pass
+
+
+student_data = pd.read_csv('student_data.csv')
+
+def corr_reletion(corr,x_name,y_name):
+        if corr == 1:
+            strength = "Perfect positive correlation btwn " + x_name + " and " + y_name
+        elif corr == -1:
+            strength = "Perfect negative correlation " + x_name + " and " + y_name
+        elif corr > 0.7:
+            strength = "Strong positive correlation " + x_name + " and " + y_name
+        elif corr > 0.3:
+            strength = "Moderate positive correlation " + x_name + " and " + y_name
+        elif corr > 0:
+            strength = "Weak positive correlation " + x_name + " and " + y_name
+        elif corr == 0:
+            strength = "No correlation " + x_name + " and " + y_name
+        elif corr < -0.7:
+            strength = "Strong negative correlation " + x_name + " and " + y_name 
+        elif corr < -0.3:
+            strength = "Moderate negative correlation " + x_name + " and " + y_name 
+        else:
+            strength = "Weak negative correlation " + x_name + " and " + y_name 
+
+        print(f"Correlation between {x_name} and {y_name} is : {corr}")
+        print(f"Interpretation: {strength}")
+
+o1 = DataAnalyzer(student_data)
+
+print("Welcome to the Student Performance Data Analysis Tool!")
+#time.sleep(1)
+print("🟢 SECTION 1: Understanding the Data")
+#time.sleep(1)
+print("🟢 SECTION 2: Academic Performance Analysis")
+#time.sleep(1)
+print("🟢 SECTION 3: Study Habits & Attendance")
+#time.sleep(1)
+print("🟢 SECTION 4: Lifestyle & Social Factors")
+#time.sleep(1)
+print("🟢 SECTION 5: Visualization-Based Questions")
+#time.sleep(1)
+print("🟢 SECTION 6: Advanced Analysis ")
+#time.sleep(1)
+print("🟢 SECTION 7: Insight & Conclusion Questions")
+#time.sleep(2)
+
+while(True) : 
+    choice = int(input("Enter the section number you want to analyze (1-7): "))
+    if choice == 1:
+        o1.analyze_data()
+        
+    elif choice == 2:
+        o1.Academic_performance()
+
+    elif choice == 3:
+        o1.Study_Habits_Attendance()
+
+    elif choice == 4:
+        o1.Lifestyle_Social_Factors()
+
+    elif choice == 5:
+        o1.Visualization_Based_Questions()
+
+    elif choice == 6:
+        o1.Advanced_Analysis()
+
+    elif choice == 7:
+        o1.Insight_Conclusion_Questions()    
+
+    elif choice < 1 or choice > 7:
+        print("Invalid choice. Please enter a number between 1 and 7.")
+        choice = int(input("Enter the section number you want to analyze (1-7): "))
