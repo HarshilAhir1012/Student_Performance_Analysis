@@ -5,7 +5,6 @@ import seaborn as sns
 import time
 space = "===" * 25
 
-
 sns.set_theme(
     style="whitegrid",
     context="notebook",
@@ -15,20 +14,14 @@ sns.set_theme(
 class DataAnalyzer:
     def __init__(self, student_data):
         self.student_data = student_data
-    
-
-    
-    
-
 
     # ## 🟢 SECTION 1: Understanding the Data
 
-        # 1. How many students are present in the dataset?
-        # 2. How many features (columns) does the dataset have?
-        # 3. What are the data types of each column?
-        # 4. Are there any missing values in the dataset?
-        # 5. What is the distribution of students by gender?
-
+    # 1. How many students are present in the dataset?
+    # 2. How many features (columns) does the dataset have?
+    # 3. What are the data types of each column?
+    # 4. Are there any missing values in the dataset?
+    # 5. What is the distribution of students by gender?
 
     def analyze_data(self): ## Section_1
 
@@ -66,7 +59,6 @@ class DataAnalyzer:
         plt.show()
         print(space)
         time.sleep(1)
-
         plt.show()
 
         print_end(1)
@@ -324,8 +316,8 @@ class DataAnalyzer:
         # 24. Create a heatmap showing correlations between numeric features.
         # 25. Visualize study time vs performance using bar or box plots.
 
-    def Visualization_Based_Questions(self):
-         ## Section_5
+    def Visualization_Based_Questions(self): ## Section_5
+        
         fig = plt.figure()
         fig, ax = plt.subplots(2, 2,figsize=(12, 10))
 
@@ -367,7 +359,7 @@ class DataAnalyzer:
 
         print(f" 📈 Create a heatmap showing correlations between numeric features : ")
         num_columns = self.student_data.select_dtypes(include='number')
-        sns.heatmap(num_columns.corr(), annot=False, cmap='coolwarm', center=0,linecolor="black", linewidths=0.2,)
+        sns.heatmap(num_columns.corr(), annot=True, cmap='coolwarm', center=0,linecolor="black", linewidths=0.2,)
         plt.title('Correlation Heatmap')
         print(space)
         time.sleep(1)
@@ -438,9 +430,6 @@ class DataAnalyzer:
         time.sleep(1)
 
         print_end(6)
-
-
-
 
 student_data = pd.read_csv('student_data.csv')
 
