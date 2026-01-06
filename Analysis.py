@@ -5,12 +5,20 @@ import seaborn as sns
 import time
 space = "===" * 25
 
+
+sns.set_theme(
+    style="whitegrid",
+    context="notebook",
+    palette="deep"
+)
+
 class DataAnalyzer:
     def __init__(self, student_data):
         self.student_data = student_data
     
 
-    sns.set_theme(style="whitegrid")
+    
+    
 
 
     # ## 🟢 SECTION 1: Understanding the Data
@@ -322,7 +330,7 @@ class DataAnalyzer:
         fig, ax = plt.subplots(2, 2,figsize=(12, 10))
 
         print(f" 📶 Plot the distribution of final grades using a histogram : ")
-        sns.histplot(self.student_data['G3'], bins=20, kde=True, ax=ax[0,0])
+        sns.histplot(self.student_data['G3'], bins=20, kde=True, ax=ax[0,0], color="coral",edgecolor="black")
         ax[0,0].set_xlabel('Final Grade (G3)')
         ax[0,0].set_ylabel('Frequency') 
         ax[0,0].set_title('Distribution of Final Grades (G3)')
@@ -347,7 +355,7 @@ class DataAnalyzer:
 
 
         print(f" 📶 Visualize study time vs performance using bar or box plots : ")
-        sns.boxplot(x='studytime', y='G3', data=self.student_data, ax=ax[1,1])
+        sns.boxplot(x='studytime', y='G3', data=self.student_data, ax=ax[1,1],color="lightgreen")
         ax[1,1].set_xlabel('Weekly Study Time')
         ax[1,1].set_ylabel('Final Grade (G3)')
         ax[1,1].set_title('Study Time vs Final Grade (G3)')
@@ -359,7 +367,7 @@ class DataAnalyzer:
 
         print(f" 📈 Create a heatmap showing correlations between numeric features : ")
         num_columns = self.student_data.select_dtypes(include='number')
-        sns.heatmap(num_columns.corr(), annot=False, cmap='coolwarm')
+        sns.heatmap(num_columns.corr(), annot=False, cmap='coolwarm', center=0,linecolor="black", linewidths=0.2,)
         plt.title('Correlation Heatmap')
         print(space)
         time.sleep(1)
