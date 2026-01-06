@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import time
-space = "---" * 25
+space = "===" * 25
 
 class DataAnalyzer:
     def __init__(self, student_data):
@@ -31,7 +31,7 @@ class DataAnalyzer:
         print(space)
 
         time.sleep(1)
-        Info_coloumns = self.student_data.info().split('\n')
+        Info_coloumns = self.student_data.info()
         print(f"What are the data types of each column? : {Info_coloumns}")
         print(space)
 
@@ -454,25 +454,28 @@ def corr_reletion(corr,x_name,y_name):
 
 o1 = DataAnalyzer(student_data)
 
-print("Welcome to the Student Performance Data Analysis Tool!")
-#time.sleep(1)
-print("🟢 SECTION 1: Understanding the Data")
-#time.sleep(1)
-print("🟢 SECTION 2: Academic Performance Analysis")
-#time.sleep(1)
-print("🟢 SECTION 3: Study Habits & Attendance")
-#time.sleep(1)
-print("🟢 SECTION 4: Lifestyle & Social Factors")
-#time.sleep(1)
-print("🟢 SECTION 5: Visualization-Based Questions")
-#time.sleep(1)
-print("🟢 SECTION 6: Advanced Analysis ")
-#time.sleep(1)
-print("🟢 SECTION 7: Insight & Conclusion Questions")
-#time.sleep(2)
+print("\n------------ Welcome to the Student Performance Data Analysis Tool ! ------------\n")
+time.sleep(1)
+print(" 1️⃣  SECTION 1: Understanding the Data")
+time.sleep(1)
+print(" 2️⃣  SECTION 2: Academic Performance Analysis")
+time.sleep(1)
+print(" 3️⃣  SECTION 3: Study Habits & Attendance")
+time.sleep(1)
+print(" 4️⃣  SECTION 4: Lifestyle & Social Factors")
+time.sleep(1)
+print(" 5️⃣  SECTION 5: Visualization-Based Questions")
+time.sleep(1)
+print(" 6️⃣  SECTION 6: Insight & Conclusion Questions\n")
 
-while(True) : 
-    choice = int(input("Enter the section number you want to analyze (1-7): "))
+time.sleep(1)
+
+while True : 
+    choice = int(input(" 👉 Enter the section number you want to analyze (1-6) and 0 for exit: "))
+    if choice == 0:
+      print("Exiting the analysis tool. Goodbye! 😭 ")
+      break
+
     if choice == 1:
         o1.analyze_data()
         
@@ -489,11 +492,8 @@ while(True) :
         o1.Visualization_Based_Questions()
 
     elif choice == 6:
-        o1.Advanced_Analysis()
-
-    elif choice == 7:
         o1.Insight_Conclusion_Questions()    
 
-    elif choice < 1 or choice > 7:
-        print("Invalid choice. Please enter a number between 1 and 7.")
-        choice = int(input("Enter the section number you want to analyze (1-7): "))
+    elif choice < 1 or choice > 6:
+        print(" 😏 Invalid choice. Please enter a number between 1 and 6. and 0 for exit.")
+        choice = int(input(" 👉 Enter the section number you want to analyze (1-6) and 0 for exit: "))
