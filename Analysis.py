@@ -309,30 +309,122 @@ class DataAnalyzer:
         # 24. Create a heatmap showing correlations between numeric features.
         # 25. Visualize study time vs performance using bar or box plots.
 
-    def Visualization_Based_Questions(self): ## Section_5
-        pass
+    def Visualization_Based_Questions(self):
+         ## Section_5
+        fig = plt.figure()
+        fig, ax = plt.subplots(2, 2,figsize=(12, 10))
 
-    ## 🟢 SECTION 6: Advanced Analysis 
+        print(f"21. Plot the distribution of final grades using a histogram : ")
+        sns.histplot(self.student_data['G3'], bins=20, kde=True, ax=ax[0,0])
+        ax[0,0].set_xlabel('Final Grade (G3)')
+        ax[0,0].set_ylabel('Frequency') 
+        ax[0,0].set_title('Distribution of Final Grades (G3)')
+        print(space)
+        time.sleep(1)
 
-        # 26. Identify top 10% performing students.
-        # 27. Compare performance of students who want higher education vs those who don’t.
-        # 28. Which factor shows the strongest correlation with final grade?
-        # 29. Are students with more past failures at higher risk of low grades?
-        # 30. What are the key indicators of good academic performance?
+        print(f"22. Create a boxplot comparing G3 scores by gender : ")
+        sns.boxplot(x='sex', y='G3', data=self.student_data, ax=ax[0,1])
+        ax[0,1].set_xlabel('Gender')
+        ax[0,1].set_ylabel('Final Grade (G3)')
+        ax[0,1].set_title('G3 Scores by Gender')
+        print(space)
+        time.sleep(1)
+
+        print(f"23. Plot absences vs final grade and analyze the trend : ")
+        sns.lineplot(x='absences', y='G3', data=self.student_data, ax=ax[1,0])
+        ax[1,0].set_xlabel('Absences')
+        ax[1,0].set_ylabel('Final Grade (G3)')
+        ax[1,0].set_title('Absences vs Final Grade (G3)')
+        print(space)
+        time.sleep(1)
+
+
+        print(f"25. Visualize study time vs performance using bar or box plots : ")
+        sns.boxplot(x='studytime', y='G3', data=self.student_data, ax=ax[1,1])
+        ax[1,1].set_xlabel('Weekly Study Time')
+        ax[1,1].set_ylabel('Final Grade (G3)')
+        ax[1,1].set_title('Study Time vs Final Grade (G3)')
+        print(space)
+        time.sleep(1)
+
+        plt.tight_layout()
+        plt.show()
+
+        print(f"24. Create a heatmap showing correlations between numeric features : ")
+        num_columns = self.student_data.select_dtypes(include='number')
+        sns.heatmap(num_columns.corr(), annot=False, cmap='coolwarm')
+        plt.title('Correlation Heatmap')
+        print(space)
+        time.sleep(1)
+        plt.show()
+
+
+        print("End of Section 5 Analysis !!!")
+
+    ## 🟢 SECTION 6: Insight & Conclusion Question
+        
+        # 26. What are the 5 most important insights from this dataset?
+        # 27. Which factors negatively affect student performance the most?
+        # 28. Which factors positively affect student performance the most?
+        # 29. What recommendations can be given to improve student results?
+        # 30. What limitations does this dataset have?
+        
+    def Insight_Conclusion_Questions(self): ## Section_6
+        
+        print(space)
+        print("This section requires subjective analysis and interpretation of the data.")
+
+        print("26. What are the 5 most important insights from this dataset? :")
+        
+        print("1) Past failures have a strong negative impact on final grades.")
+        print("2) Early academic performance (G1, G2) strongly predicts final results (G3).")
+        print("3) Study time has a positive but limited effect on performance.")
+        print("4) Absences show very weak correlation with final grades.")
+        print("5) Family and school support have a small positive influence.")
+
+        print(space)
+        time.sleep(1)
+
+        print("27. Which factors negatively affect student performance the most? :")
+        print("1) Past failures with corr = {}".format(round(self.student_data['failures'].corr(self.student_data['G3']),5)))
+        print("2) Alcohol consumption with corr = {}".format(round(self.student_data['Dalc'].corr(self.student_data['G3']),5)))
+        print("3) Low study time with corr = {}".format(round(self.student_data['studytime'].corr(self.student_data['G3']),5)))
+        print("4) poor family support with corr = {}".format(round(self.student_data['famsup'].map({'yes': 1, 'no': 0}).corr(self.student_data['G3']),5)))
+        print(space)
+        time.sleep(1)
+
+        print("28. Which factors positively affect student performance the most? :")
+        print("1) early grades G1 and G2 with corr = {} and {} respectively".format(round(self.student_data['G1'].corr(self.student_data['G3']),5),round(self.student_data['G2'].corr(self.student_data['G3']),5)))
+        print("2) Higher study time with corr = {}".format(round(self.student_data['studytime'].corr(self.student_data['G3']),5)))
+        print("3) motivation of higher education with corr = {}".format(round(self.student_data['higher'].map({'yes': 1, 'no': 0}).corr(self.student_data['G3']),5)))
+
+        print(space)
+        time.sleep(1)
     
-    def Advanced_Analysis(self): ## Section_6
-        pass
+        print("29. What recommendations can be given to improve student results? :")
 
-    ## 🟢 SECTION 7: Insight & Conclusion Question
-        
-        # 31. What are the 5 most important insights from this dataset?
-        # 32. Which factors negatively affect student performance the most?
-        # 33. Which factors positively affect student performance the most?
-        # 34. What recommendations can be given to improve student results?
-        # 35. What limitations does this dataset have?
-        
-    def Insight_Conclusion_Questions(self): ## Section_7
-        pass
+        print("- Provide early support to students with past failures.")
+        print("- Encourage consistent and structured study habits.")
+        print("- Reduce negative lifestyle behaviors such as alcohol consumption.")
+        print("- Strengthen family and school educational support systems.")
+        print("- Motivate students to set higher education goals.")
+
+        print(space)
+        time.sleep(1)
+
+        print("30. What limitations does this dataset have? :")
+
+        print("1) Correlation does not imply causation.")
+        print("2) Dataset is limited to a small number of schools.")
+        print("3) Some variables are self-reported and may contain bias.")
+        print("4) Important qualitative factors are not included.")
+        print("5) Dataset represents a static snapshot, not long-term trends.")
+        print(space)
+        time.sleep(1)
+
+        print("\nEnd of Insights & Conclusion Section")
+
+
 
 
 student_data = pd.read_csv('student_data.csv')

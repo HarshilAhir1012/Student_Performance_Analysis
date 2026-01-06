@@ -117,23 +117,13 @@ The dataset contains information about:
 
 ---
 
-## 🟢 SECTION 6: Advanced Analysis (Still EDA – No ML)
+## 🟢 SECTION 6: Insight & Conclusion Questions
 
-26. Identify top 10% performing students.
-27. Compare performance of students who want higher education vs those who don’t.
-28. Which factor shows the strongest correlation with final grade?
-29. Are students with more past failures at higher risk of low grades?
-30. What are the key indicators of good academic performance?
-
----
-
-## 🟢 SECTION 7: Insight & Conclusion Questions
-
-31. What are the 5 most important insights from this dataset?
-32. Which factors negatively affect student performance the most?
-33. Which factors positively affect student performance the most?
-34. What recommendations can be given to improve student results?
-35. What limitations does this dataset have?
+26. What are the 5 most important insights from this dataset?
+27. Which factors negatively affect student performance the most?
+28. Which factors positively affect student performance the most?
+29. What recommendations can be given to improve student results?
+30. What limitations does this dataset have?
 
 ---
 
