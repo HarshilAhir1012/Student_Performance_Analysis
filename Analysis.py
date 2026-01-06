@@ -206,8 +206,101 @@ class DataAnalyzer:
         # 20. Does going out with friends affect performance?
 
     def Lifestyle_Social_Factors(self): ## Section_4
-        pass
+        
+        print(space)
+        time.sleep(1)
 
+        print("16. Does free time after school affect grades?")
+        corr_of_freetime_G3 = self.student_data['freetime'].corr(self.student_data['G3'])
+        corr_reletion(corr_of_freetime_G3,'freetime','G3')
+        print(space)
+        time.sleep(1)
+
+        print("17. Is alcohol consumption related to student performance?")
+        corr_of_alcohol_G3 = self.student_data['Dalc'].corr(self.student_data['G3'])
+        corr_reletion(corr_of_alcohol_G3,'Dalc','G3')
+        print(space)
+        time.sleep(1)
+
+        print("18. Do students in romantic relationships perform differently?")
+        corr_of_romantic_G3 = self.student_data['romantic'].map({'yes': 1, 'no': 0}).corr(self.student_data['G3']) 
+        corr_reletion(corr_of_romantic_G3,'romantic','G3')
+        print(space)    
+        time.sleep(1)
+
+        print("19. Does internet access at home improve grades?")
+        corr_of_internet_G3 = self.student_data['internet'].map({'yes': 1, 'no': 0}).corr(self.student_data['G3'])
+        corr_reletion(corr_of_internet_G3,'internet','G3')
+        print(space)
+        time.sleep(1)
+
+        print("20. Does going out with friends affect performance?")    
+        corr_of_goout_G3 = self.student_data['goout'].corr(self.student_data['G3'])
+        corr_reletion(corr_of_goout_G3,'goout','G3')
+        print(space)
+        time.sleep(1)
+
+        print(" 📈 Plots for Lifestyle & Social Factors Analysis:")
+        print(space)
+        time.sleep(1)
+
+        print(f"Plot showing free time after school vs G3 : ")
+        plt.figure(figsize=(6, 4))  
+        sns.violinplot(x='freetime', y='G3', data=self.student_data)
+        plt.xlabel('Free Time After School')
+        plt.ylabel('Final Grade (G3)')
+        plt.title('Free Time After School vs Final Grade with corr = ' + str(round(corr_of_freetime_G3,5)))
+        plt.grid(True)  
+        print(space)
+        time.sleep(1)
+        plt.show()
+
+        fig,ax = plt.subplots(2,2,figsize=(16, 10))
+        print(f"Plot showing going alcohol consumption vs G3 : ")
+
+        sns.violinplot(x='Dalc', y='G3', data=self.student_data, ax=ax[0,0])
+        ax[0,0].set_xlabel('Going Alcohol Consumption')
+        ax[0,0].set_ylabel('Final Grade (G3)')
+        ax[0,0].set_title('Going Alcohol Consumption vs Final Grade with corr = ' + str(round(corr_of_alcohol_G3,5)))
+        plt.grid(True)  
+        print(space)
+        time.sleep(1)
+
+        print("plot showing romantic relationship vs G3 : ")
+        # plt.figure(figsize=(6, 4))  
+        sns.violinplot(x='romantic', y='G3', data=self.student_data , ax=ax[0,1])
+        ax[0,1].set_xlabel('Romantic Relationship')
+        ax[0,1].set_ylabel('Final Grade (G3)')
+        ax[0,1].set_title('Romantic Relationship vs Final Grade with corr = ' + str(round(corr_of_romantic_G3,5)))
+        plt.grid(True)  
+        print(space)
+        time.sleep(1)
+
+        print("plot showing internet access at home vs G3 : ")
+        # plt.figure(figsize=(6, 4))
+        sns.violinplot(x='internet', y='G3', data=self.student_data, ax=ax[1,0])
+        ax[1,0].set_xlabel('Internet Access at Home')
+        ax[1,0].set_ylabel('Final Grade (G3)')
+        ax[1,0].set_title('Internet Access at Home vs Final Grade with corr = ' + str(round(corr_of_internet_G3,5)))
+        plt.grid(True)
+        print(space)
+        time.sleep(1)
+
+        print("plot showing going out with friends vs G3 : ")
+        # plt.figure(figsize=(6, 4))
+        sns.boxplot(x='goout', y='G3', data=self.student_data, ax=ax[1,1])
+        ax[1,1].set_xlabel('Going Out with Friends')
+        ax[1,1].set_ylabel('Final Grade (G3)')
+        ax[1,1].set_title('Going Out with Friends vs Final Grade with corr = ' + str(round(corr_of_goout_G3,5)))
+        plt.grid(True)
+        print(space)
+        time.sleep(1)
+        plt.tight_layout()
+        plt.show()
+
+
+        print("End of Section 4 Analysis !!!")  
+        
     ## 🟢 SECTION 5: Visualization-Based Questions
 
         # 21. Plot the distribution of final grades using a histogram.
