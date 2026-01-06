@@ -26,6 +26,7 @@ The analysis is done using **Python**, focusing on data cleaning, statistical an
 - Pandas
 - Matplotlib
 - Seaborn
+- Time
 
 ---
 
